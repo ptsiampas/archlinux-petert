@@ -8,9 +8,9 @@ if [ -f "$ISYAY" ]; then
     echo -e "yay was located, moving on."
 else 
     echo -e "Yay was NOT located installing"
-    git clone https://aur.archlinux.org/yay.git &>> $INSTLOG
+    git clone https://aur.archlinux.org/yay.git
     cd yay
-    makepkg -si --noconfirm &>> ../$INSTLOG
+    makepkg -si --noconfirm
     cd .. && rm -rf yay
 
 fi
