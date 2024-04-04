@@ -39,8 +39,8 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-
 if [ -f "$HOME/.zshrc" ]; then
     mv "$HOME/.zshrc" "$HOME/.zshrc.old"
 fi
-ln -s ./dotfiles/zshrc "$HOME/.zshrc"
-ln -s ./dotfiles/p10k.zsh "$HOME/.p10k.zsh"
+ln -s ${PWD}/dotfiles/zshrc "$HOME/.zshrc"
+ln -s ${PWD}/dotfiles/p10k.zsh "$HOME/.p10k.zsh"
 
 # Setup Neovim
 git clone https://github.com/ptsiampas/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
