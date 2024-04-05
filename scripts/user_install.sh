@@ -14,7 +14,7 @@ else
 fi
 
 # Install packages with yay
-EDITOR=true yay -S brave-bin autojump --noconfirm --needed
+EDITOR=true yay -S floorp autojump thorium-browser-bin --noconfirm --needed
 
 # Install fonts
 mkdir -p ~/.fonts
