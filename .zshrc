@@ -87,13 +87,13 @@ plugins=(
   bundler
   ruby
   docker
-  ssh-agent
+#  ssh-agent
 )
 
 # ssh-agent plugin settings
-zstyle :omz:plugins:ssh-agent agent-forwarding yes
-zstyle :omz:plugins:ssh-agent identities ~/.ssh/*_key
-zstyle :omz:plugins:ssh-agent quiet yes
+#zstyle :omz:plugins:ssh-agent agent-forwarding yes
+#zstyle :omz:plugins:ssh-agent identities ~/.ssh/*_key
+#zstyle :omz:plugins:ssh-agent quiet yes
 
 source $ZSH/oh-my-zsh.sh
 
