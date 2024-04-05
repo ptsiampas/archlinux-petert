@@ -26,6 +26,10 @@ Need to put the commands here to add username and token for github.
 Clone this repository to a ~/dotfiles folder:
 ```shell
 $ git clone https://github.com/ptsiampas/archlinux-petert.git ~/.dotfiles
+$ cd ~/.dotfiles/scripts
+$ sudo ./install.sh
+$ cd ..
+$ stow
 ```
 
 ## Post Install
