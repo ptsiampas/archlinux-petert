@@ -44,6 +44,7 @@ VAULT_SECRET="$HOME/.ansible-vault/vault.secret"
 DOTFILES_DIR="$HOME/.dotfiles"
 SSH_DIR="$HOME/.ssh"
 IS_FIRST_RUN="$HOME/.dotfiles_run"
+DOTFILE_REPO="https://github.com/ptsiampas/archlinux-petert.git"
 # _header colorize the given argument with spacing
 function _task {
   # if _task is called while a task was set, complete the previous
@@ -180,7 +181,7 @@ fi
 
 if ! [[ -d "$DOTFILES_DIR" ]]; then
   _task "Cloning repository"
-  _cmd "git clone --quiet https://github.com/TechDufus/dotfiles.git $DOTFILES_DIR"
+  _cmd "git clone --quiet $DOTFILES_REPO $DOTFILES_DIR"
 else
   _task "Updating repository"
   _cmd "git -C $DOTFILES_DIR pull --quiet"
