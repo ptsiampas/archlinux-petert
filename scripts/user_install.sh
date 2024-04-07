@@ -14,7 +14,7 @@ else
 fi
 
 # Install packages with yay
-EDITOR=true yay -S floorp autojump thorium-browser-bin --noconfirm --needed
+EDITOR=true yay -S floorp-bin autojump thorium-browser-bin --noconfirm --needed
 
 # Install fonts
 mkdir -p ~/.fonts
@@ -32,8 +32,12 @@ cd Nordzy-cursors || exit
 cd .. && rm -rf Nordzy-cursors
 
 # Install Oh My Zsh and Powerlevel10k
-sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc --skip-chsh
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+else
+    echo "oh-my-zsh was located, moving on."
+fi
 
 # Backup and replace .zshrc if it exists
 if [ -f "$HOME/.zshrc" ]; then
