@@ -26,11 +26,11 @@ Place the file `~/.ansible-vault/vault.secret` in the vault folder in the home d
 This playbook uses a custom script in the `bin/dotfiles`. This script is added to your `$PATH` after installation and can be run mulitple times.
 
 ```sh
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ptsiampas/tsiampas_dotfiles/main/bin/dotfiles)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ptsiampas/archlinux-petert/main/bin/dotfiles)"
 ```
 If you want to run only a specific role, you can specify the following bash command:
 ```bash
-curl -fsSL  https://raw.githubusercontent.com/ptsiampas/tsiampas_dotfiles/main/bin/dotfiles | bash -s -- --tags comma,seperated,tags
+curl -fsSL  https://raw.githubusercontent.com/ptsiampas/archlinux-petert/main/bin/dotfiles | bash -s -- --tags comma,seperated,tags
 ```
 
 ### Update
