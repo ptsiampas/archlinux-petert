@@ -18,19 +18,31 @@ Basic Install and configuration of my preferred environment for ArchLinux
 
 This setup will prompt you for your username and password the next time you access your GitHub repository. After the initial entry, Git will store your credentials securely and won't ask for them again for future transactions with the repository.
 
-```Shell
-Need to put the commands here to add username and token for github.
+### Make sure you have the vault secret in place
+Place the file `~/.ansible-vault/vault.secret` in the vault folder in the home directory, before you run the playbook.
 
+## Install
+
+This playbook uses a custom script in the `bin/dotfiles`. This script is added to your `$PATH` after installation and can be run mulitple times.
+
+```sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ptsiampas/tsiampas_dotfiles/main/bin/dotfiles)"
+```
+If you want to run only a specific role, you can specify the following bash command:
+```bash
+curl -fsSL  https://raw.githubusercontent.com/ptsiampas/tsiampas_dotfiles/main/bin/dotfiles | bash -s -- --tags comma,seperated,tags
 ```
 
-Clone this repository to a ~/dotfiles folder:
-```shell
-$ git clone https://github.com/ptsiampas/archlinux-petert.git ~/.dotfiles
-$ cd ~/.dotfiles/scripts
-$ sudo ./install.sh
-$ cd ..
-$ stow
+### Update
+
+This repository is continuously updated with new features and settings which become available to you when updating.
+
+To update your environment run the `dotfiles` command in your shell:
+
+```bash
+dotfiles
 ```
+
 
 ## Post Install
 - Install dropbox and filter the directories to just include ssh_keys, once syncronised then copy the keys from `/home/petert/Dropbox/ssh_keys/desktop_keys/*_key` to `~/.ssh/`
