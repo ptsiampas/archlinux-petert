@@ -12,5 +12,5 @@
   ansible.builtin.git:
     repo: https://github.com/ptsiampas/kickstart.nvim.git
     dest: "{{ ansible_user_dir }}/.config/nvim"
-    force: yes
-    create_remote: yes
+    clone: yes
+    update: yes
