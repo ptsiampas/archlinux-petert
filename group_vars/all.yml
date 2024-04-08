@@ -3,6 +3,7 @@ default_roles:
   - neofetch
   - neovim
   - git
+  - ssh
 
 git_user_name: "ptsiampas"
 git_user_email: !vault |
