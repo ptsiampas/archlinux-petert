@@ -34,8 +34,7 @@
   become_user: "{{ ansible_env['USER']}}"
   block:
     - name: Create tmporary file
-      ansible.builtin.file:
-        path: "/tmp/oh-my-zsh-install.sh"
+      ansible.builtin.tempfile:
         state: file
       register: oh_my_zsh_install_script
 
