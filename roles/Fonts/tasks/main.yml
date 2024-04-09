@@ -1,0 +1,46 @@
+---
+# tasks file for Fonts
+- name: Ensure .fonts directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.fonts"
+    state: directory
+
+- name: Download and unzip fonts
+  block:
+    - name: Download FiraCode font
+      ansible.builtin.get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
+        dest: "/tmp/FiraCode.zip"
+        mode: '0444'
+
+    - name: Unzip FiraCode font
+      ansible.builtin.unarchive:
+        src: "/tmp/FiraCode.zip"
+        dest: "{{ ansible_env.HOME }}/.fonts"
+        remote_src: yes
+        creates: "{{ ansible_env.HOME }}/.fonts/FiraCode-Regular.ttf"  # Adjust based on actual file name
+      notify: Update font cache
+
+    - name: Download Meslo font
+      ansible.builtin.get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
+        dest: "/tmp/Meslo.zip"
+        mode: '0444'
+
+    - name: Unzip Meslo font
+      ansible.builtin.unarchive:
+        src: "/tmp/Meslo.zip"
+        dest: "{{ ansible_env.HOME }}/.fonts"
+        remote_src: yes
+        creates: "{{ ansible_env.HOME }}/.fonts/MesloLGM-Regular.ttf"  # Adjust based on actual file name
+      notify: Update font cache
+  become: no  # Assuming you're running this as the target user; adjust as needed
+
+- name: Remove downloaded zip files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/tmp/FiraCode.zip"
+    - "/tmp/Meslo.zip"
+
