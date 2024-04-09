@@ -13,6 +13,23 @@
   become: yes
 
 # Install Oh-My-ZSH using the standard method, to avoid mishaps
+
+
+- name: Define oh_my_zsh_installation_folder
+  ansible.builtin.set_fact:
+    oh_my_zsh_installation_folder: "{{ ansible_user_dir }}/.oh-my-zsh"
+  when: user.oh_my_zsh_installation_folder is not defined
+
+- name: Print Oh-My-ZSH installation folder
+  ansible.builtin.debug:
+    msg: "{{ user.oh_my_zsh_installation_folder if user.oh_my_zsh_installation_folder is defined else oh_my_zsh_installation_folder }}"
+
+- name: Check if Oh-My-ZSH is installed
+  become_user: "{{ user.name }}"
+  ansible.builtin.stat:
+    path: "{{ user.oh_my_zsh_installation_folder if user.oh_my_zsh_installation_folder is defined else oh_my_zsh_installation_folder }}"
+  register: oh_my_zsh_installed
+
 - name: Install Oh-My-ZSH
   become_user: "{{ ansible_env['USER']}}"
   block:
@@ -21,22 +38,22 @@
         state: file
       register: oh_my_zsh_install_script
 
-    - name: Download Oh-My-ZSH
+    - name: "Download Oh-My-ZSH"
       ansible.builtin.get_url:
         url: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
         dest: "{{ oh_my_zsh_install_script.path }}"
         mode: "0700"
 
-    - name: Install Oh-My-ZSH
+    - name: "Install Oh-My-ZSH"
       ansible.builtin.command: "{{ oh_my_zsh_install_script.path }} --unattended --keep-zshrc --skip-chsh"
 
-    - name: Remove the temporary file
+    - name: "Remove the temporary file"
       ansible.builtin.file:
         path: "{{ oh_my_zsh_install_script.path }}"
         state: absent
       when: oh_my_zsh_install_script.path is defined
 
-- name: Install powerlevel10k
+- name: "Install powerlevel10k"
   ansible.builtin.git:
     repo: https://github.com/romkatv/powerlevel10k.git
     dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/themes/powerlevel10k"
@@ -45,13 +62,13 @@
   become: yes
 
 # link the .zshrc and .p10k.zsh files from the files directory
-- name: link .zshrc
+- name: "link .zshrc"
   ansible.builtin.file:
     src: "{{ role_path }}/files/zshrc"
     dest: "{{ ansible_user_dir }}/.zshrc"
     state: link
 
-- name: link pk10k.zsh
+- name: "link pk10k.zsh"
   ansible.builtin.file:
     src: "{{ role_path }}/files/p10k.zsh"
     dest: "{{ ansible_user_dir }}/.p10k.zsh"
