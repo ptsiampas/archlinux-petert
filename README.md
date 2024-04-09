@@ -23,6 +23,9 @@ Place the file `~/.ansible-vault/vault.secret` in the vault folder in the home d
 
 ## Install
 
+### Notes
+- Neovim install is the base binary, the configuration of Neovim is pulled from my personal repo: https://github.com/ptsiampas/kickstart.nvim
+
 This playbook uses a custom script in the `bin/dotfiles`. This script is added to your `$PATH` after installation and can be run mulitple times.
 
 ```sh
