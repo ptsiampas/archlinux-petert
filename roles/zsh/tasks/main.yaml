@@ -12,9 +12,20 @@
     shell: /usr/bin/zsh
   become: yes
 
+# link the .zshrc and .p10k.zsh files from the files directory, doing this first so that the script dosn't clober them
+- name: "link .zshrc"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/zshrc"
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    state: link
+
+- name: "link pk10k.zsh"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/p10k.zsh"
+    dest: "{{ ansible_user_dir }}/.p10k.zsh"
+    state: link
+
 # Install Oh-My-ZSH using the standard method, to avoid mishaps
-
-
 - name: Define oh_my_zsh_installation_folder
   ansible.builtin.set_fact:
     oh_my_zsh_installation_folder: "{{ ansible_user_dir }}/.oh-my-zsh"
@@ -61,15 +72,3 @@
     update: yes
   become: yes
 
-# link the .zshrc and .p10k.zsh files from the files directory
-- name: "link .zshrc"
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/zshrc"
-    dest: "{{ ansible_user_dir }}/.zshrc"
-    state: link
-
-- name: "link pk10k.zsh"
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/p10k.zsh"
-    dest: "{{ ansible_user_dir }}/.p10k.zsh"
-    state: link
