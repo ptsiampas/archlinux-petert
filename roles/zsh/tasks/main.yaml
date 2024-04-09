@@ -25,7 +25,7 @@
     msg: "{{ user.oh_my_zsh_installation_folder if user.oh_my_zsh_installation_folder is defined else oh_my_zsh_installation_folder }}"
 
 - name: Check if Oh-My-ZSH is installed
-  become_user: "{{ user.name }}"
+  become_user: "{{ ansible_env['USER'] }}"
   ansible.builtin.stat:
     path: "{{ user.oh_my_zsh_installation_folder if user.oh_my_zsh_installation_folder is defined else oh_my_zsh_installation_folder }}"
   register: oh_my_zsh_installed
