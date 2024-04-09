@@ -2,7 +2,7 @@
 # tasks file for Fonts
 - name: Ensure .fonts directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.fonts"
+    path: "{{ ansible_user_dir }}/.fonts"
     state: directory
 
 - name: Download and unzip fonts
