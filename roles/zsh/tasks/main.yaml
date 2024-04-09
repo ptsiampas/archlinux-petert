@@ -63,6 +63,7 @@
         path: "{{ oh_my_zsh_install_script.path }}"
         state: absent
       when: oh_my_zsh_install_script.path is defined
+  when: not oh_my_zsh_installed.stat.exists
 
 - name: "Install powerlevel10k"
   ansible.builtin.git:
