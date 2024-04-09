@@ -1,7 +1,9 @@
 ---
-- name: "Neovim | {{ ansible_distribution }} | Install Neovim Nightly"
+- name: "Neovim | {{ ansible_distribution }} | Dependencies"
   ansible.builtin.pacman:
     name:
       - neovim
+      - nodejs
+      - npm
     state: present
   become: true
