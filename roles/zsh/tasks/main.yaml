@@ -32,7 +32,7 @@
 
 - name: "Decrypt config and write file"
   copy:
-    dest: "{{ ansible_user_dir }}/.codeium/config.conf"
+    dest: "{{ ansible_user_dir }}/.codeium/config.json"
     content: "{{ codium_config }}"
     mode: "0644"
   no_log: true
