@@ -11,5 +11,11 @@
     name:
       - jq
       - unzip
+      - autojump
+      - btop
+      - python3
+      - kitty
+      - ttf-font-awesome
+      - ttf-nerd-fonts-symbols
     state: present
   become: true
