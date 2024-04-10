@@ -47,17 +47,21 @@ dotfiles
 ```
 
 ## Encrypted Vault
-How to encrypt a file with Ansible Vault.
+### How to encrypt a file with Ansible Vault.
+For an advanced version using looped values, look at the ssh `main.yml` and `all.yml` within this repo.
 ```Shell
 cat myfile.conf | ansible-vault encrypt_string --vault-password-file $HOME/.ansible-vault/vault.secret --stdin-name "myfile.conf"
 ```
-How to use within a role.
+
+Copy and paste the output of the above command into `all.yml`.
+
+### How to use within a role.
 ```yaml
 ---
 - name: "Decrypt and write file"
   copy:
-    dest: "{{ ansible_user_dir }}/.config_location/{{ myfile.conf }}"
-    content: "{{ myfile.conf.value }}"
+    dest: "{{ ansible_user_dir }}/.config_location/myfile.conf"
+    content: "{{ myfile.conf }}"
     mode: "0644"
-  no_log: true
+  no_log: true # don't log the content
 ```
