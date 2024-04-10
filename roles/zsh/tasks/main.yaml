@@ -25,6 +25,13 @@
     dest: "{{ ansible_user_dir }}/.p10k.zsh"
     state: link
 
+- name: "Decrypt config and write file"
+  copy:
+    dest: "{{ ansible_user_dir }}/.codeium/{{ config.conf }}"
+    content: "{{ codium_config.value }}"
+    mode: "0644"
+  no_log: true
+  
 # Install Oh-My-ZSH using the standard method, to avoid mishaps
 - name: Define oh_my_zsh_installation_folder
   ansible.builtin.set_fact:

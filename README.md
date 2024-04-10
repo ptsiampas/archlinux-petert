@@ -46,18 +46,18 @@ To update your environment run the `dotfiles` command in your shell:
 dotfiles
 ```
 
-
-## Post Install
-- Install dropbox and filter the directories to just include ssh_keys, once syncronised then copy the keys from `/home/petert/Dropbox/ssh_keys/desktop_keys/*_key` to `~/.ssh/`
-- Uncomment the following in the .zshrc file to activate ssh key autoload.
-    ```
-    plugins=(
-    ..
-        ssh-agent
-    )
-    # ssh-agent plugin settings
-    zstyle :omz:plugins:ssh-agent agent-forwarding yes
-    zstyle :omz:plugins:ssh-agent identities ~/.ssh/*_key
-    zstyle :omz:plugins:ssh-agent quiet yes
-    ```
-- Other post install stuff
+## Encrypted Vault
+How to encrypt a file with Ansible Vault.
+```Shell
+cat myfile.conf | ansible-vault encrypt_string --vault-password-file $HOME/.ansible-vault/vault.secret --stdin-name "myfile.conf"
+```
+How to use within a role.
+```yaml
+---
+- name: "Decrypt and write file"
+  copy:
+    dest: "{{ ansible_user_dir }}/.config_location/{{ myfile.conf }}"
+    content: "{{ myfile.conf.value }}"
+    mode: "0644"
+  no_log: true
+```
