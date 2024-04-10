@@ -1,4 +1,11 @@
 ---
+- name: "Install unzip - to make sure we can unzip fonts"
+  community.general.pacman:
+    name:
+      - unzip
+    state: present
+  become: true
+
 # tasks file for Fonts
 - name: Ensure .fonts directory exists
   ansible.builtin.file:
