@@ -25,10 +25,15 @@
     dest: "{{ ansible_user_dir }}/.p10k.zsh"
     state: link
 
+- name: "Create codium directory"
+  file: 
+    path: "{{ ansible_user_dir }}/.codeium"
+    state: directory
+
 - name: "Decrypt config and write file"
   copy:
-    dest: "{{ ansible_user_dir }}/.codeium/{{ config.conf }}"
-    content: "{{ codium_config.value }}"
+    dest: "{{ ansible_user_dir }}/.codeium/config.conf"
+    content: "{{ codium_config }}"
     mode: "0644"
   no_log: true
   
