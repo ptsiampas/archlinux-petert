@@ -11,7 +11,6 @@
     name:
       - jq
       - unzip
-      - autojump
       - btop
       - python3
       - kitty
@@ -19,3 +18,8 @@
       - ttf-nerd-fonts-symbols
     state: present
   become: true
+
+- name: "Install Autojump"
+  kewlfft.aur.aur:
+    name: autojump
+    state: present
