@@ -1,24 +1,20 @@
 ---
-- name: "Fabric | Ensure Python and pip are installed (Debian-based systems)"
-  ansible.builtin.apt:
-    name:
-      - python3
-      - python3-pip
-    state: present
-  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+- name: Check the OS distribution and install pipx
+  block:
+    - name: Gather facts about the target system
+      setup:
 
-- name: "Fabric | Ensure Python and pip are installed (Archlinux)"
-  ansible.builtin.pacman:
-    name:
-      - python
-      - python-pip
-    state: present
-  when: ansible_facts['distribution'] == 'Archlinux'
+    - name: Install pipx on Arch Linux
+      pacman:
+        name: python-pipx
+        state: present
+      when: ansible_distribution == 'Arch'
 
-- name: "Fabric | Install pipx using pip"
-  ansible.builtin.pip:
-    name: pipx
-    executable: pip3
+    - name: Install pipx on Debian-based systems
+      apt:
+        name: python3-pipx
+        state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: "Fabric | Ensure the directory exists for home/petert/github"
   ansible.builtin.file:
