@@ -37,9 +37,21 @@
   args:
     chdir: "{{ ansible_user_dir }}/github/fabric"
 
+- name: "Fabric | Install Fabric using pipx"
+  ansible.builtin.command:
+    cmd: "pipx install ."
+  args:
+    chdir: "{{ ansible_user_dir }}/github/fabric"
+
+- name: "Fabric | Ensure the directory exists for home/petert/.config/fabric"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/fabric"
+    state: directory
+    mode: '0755'
+
 - name: "Fabric | Decrypt values for.env file to the configuration directory"
   copy:
-    dest: "{{ ansible_user_dir }}/.config/.env"
+    dest: "{{ ansible_user_dir }}/.config/fabric/.env"
     content: "{{ fabric_config }}"
     owner: petert
     group: petert
