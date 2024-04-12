@@ -4,25 +4,12 @@
     - name: Gather facts about the target system
       setup:
 
-    - name: Install pipx on Arch Linux
-      pacman:
-        name: python-pipx
-        state: present
-      become: true
-      when: ansible_os_family == 'Archlinux'
-
-    - name: Install pipx on Debian-based systems
-      apt:
-        name: python3-pipx
-        state: present
-      become: true
-      when: ansible_os_family == 'Debian'
-    # Ensure Python and pip are installed for both distributions
-    - name: Install Python and pip and pexpect on Arch Linux
+    - name: Install System versions of python, pip, pipx and pexpect on Arch Linux
       pacman:
         name:
           - python
           - python-pip
+          - python-pipx
           - python-pexpect
         state: present
       become: true
@@ -33,14 +20,9 @@
         name:
           - python3
           - python3-pip
+          - python3-pipx
+          - python3-pexpect
         state: present
-      become: true
-      when: ansible_os_family == 'Debian'
-
-    - name: Install pexpect on Debian-based systems
-      pip:
-        name: pexpect
-        executable: pip3
       become: true
       when: ansible_os_family == 'Debian'
 
