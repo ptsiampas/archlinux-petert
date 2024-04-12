@@ -6,16 +6,6 @@
     name: kitty
     state: present
 
-- name: Set kitty as default terminal
-  systemd:
-    name: kitty
-    state: enabled
-
-- name: Start kitty
-  systemd:
-    name: kitty
-    state: started
-
 - name: "Copy kitty config file"
   copy:
     src: "{{ role_path }}/files/kitty.conf"
