@@ -18,11 +18,12 @@
       become: true
       when: ansible_os_family == 'Debian'
     # Ensure Python and pip are installed for both distributions
-    - name: Install Python and pip on Arch Linux
+    - name: Install Python and pip and pexpect on Arch Linux
       pacman:
         name:
           - python
           - python-pip
+          - python-pexpect
         state: present
       become: true
       when: ansible_os_family == 'Archlinux'
@@ -36,14 +37,6 @@
       become: true
       when: ansible_os_family == 'Debian'
 
-    # Install pexpect using pip for both distributions
-    - name: Install pexpect on Arch Linux
-      pip:
-        name: pexpect
-        executable: pip
-      become: true
-      when: ansible_os_family == 'Archlinux'
-
     - name: Install pexpect on Debian-based systems
       pip:
         name: pexpect
@@ -51,32 +44,32 @@
       become: true
       when: ansible_os_family == 'Debian'
 
-- name: "Fabric | Ensure the directory exists for home/petert/github"
+- name: "Ensure the directory exists for home/petert/github"
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/github"
     state: directory
     mode: '0755'
 
-- name: "Fabric | Clone Fabric repository"
+- name: "Clone Fabric repository"
   ansible.builtin.git:
     repo: 'https://github.com/danielmiessler/fabric.git'
     dest: "{{ ansible_user_dir }}/github/fabric"
     clone: yes
     update: yes
 
-- name: "Fabric | Install Fabric using pipx"
+- name: "Install Fabric using pipx"
   ansible.builtin.command:
     cmd: "pipx install ."
   args:
     chdir: "{{ ansible_user_dir }}/github/fabric"
 
-- name: "Fabric | Ensure the directory exists for home/petert/.config/fabric"
+- name: "Ensure the directory exists for home/petert/.config/fabric"
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/fabric"
     state: directory
     mode: '0755'
 
-- name: "Fabric | Decrypt values for.env file to the configuration directory"
+- name: "Decrypt values for.env file to the configuration directory"
   copy:
     dest: "{{ ansible_user_dir }}/.config/fabric/.env"
     content: "{{ fabric_config }}"
@@ -85,7 +78,7 @@
     mode: "0644"
   no_log: true
 
-- name: "Fabric | Run Setup for fabric"
+- name: "Run Setup for fabric"
   ansible.builtin.expect:
     command: "fabric --setup"
     responses:
