@@ -37,12 +37,6 @@
   args:
     chdir: "{{ ansible_user_dir }}/github/fabric"
 
-- name: "Fabric | Install Fabric using pipx"
-  ansible.builtin.command:
-    cmd: "pipx install ."
-  args:
-    chdir: "{{ ansible_user_dir }}/github/fabric"
-
 - name: "Fabric | Ensure the directory exists for home/petert/.config/fabric"
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/fabric"
@@ -57,3 +51,12 @@
     group: petert
     mode: "0644"
   no_log: true
+
+- name: "Fabric | Run Setup for fabric"
+  ansible.builtin.expect:
+    command: "fabric --setup"
+    responses:
+      (?i)Please enter your OpenAI API key.*: "\n"
+      (?i)Please enter your claude API key.*: "\n"
+      (?i)Please enter your YouTube API key.*: "\n"
+    timeout: 30
