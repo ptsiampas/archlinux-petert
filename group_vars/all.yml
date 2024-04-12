@@ -6,6 +6,7 @@ default_roles:
   - git
   - fonts
   - ssh
+  - kitty
 
 git_user_name: "ptsiampas"
 git_user_email: !vault |

@@ -1,0 +1,24 @@
+---
+# tasks file for kitty
+
+- name: Install kitty
+  pacman:
+    name: kitty
+    state: present
+
+- name: Set kitty as default terminal
+  systemd:
+    name: kitty
+    state: enabled
+
+- name: Start kitty
+  systemd:
+    name: kitty
+    state: started
+
+- name: "Copy kitty config file"
+  copy:
+    src: "{{ role_path }}/files/kitty.conf"
+    dest: "{{ ansible_user_dir }}/.config/kitty/kitty.conf"
+    mode: "0644"
+
