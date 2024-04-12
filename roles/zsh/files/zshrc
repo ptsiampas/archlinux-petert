@@ -127,7 +127,9 @@ alias vim="nvim"
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias top='btop'
+alias dotfile="$HOME/.dotfiles/bin/dotfiles"
 
+## Need to change this so that it identifies the debian based distro.
 apt() { 
   command nala "$@"
 }
