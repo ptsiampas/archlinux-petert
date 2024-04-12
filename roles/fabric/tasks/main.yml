@@ -8,12 +8,14 @@
       pacman:
         name: python-pipx
         state: present
+      become: true
       when: ansible_os_family == 'Archlinux'
 
     - name: Install pipx on Debian-based systems
       apt:
         name: python3-pipx
         state: present
+      become: true
       when: ansible_os_family == 'Debian'
 
 - name: "Fabric | Ensure the directory exists for home/petert/github"
