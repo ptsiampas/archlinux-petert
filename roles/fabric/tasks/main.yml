@@ -1,0 +1,40 @@
+---
+- name: "Fabric | Ensure the directory exists for home/petert/github"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/github"
+    state: directory
+    mode: '0755'
+
+- name: "Fabric | Clone Fabric repository"
+  ansible.builtin.git:
+    repo: 'https://github.com/danielmiessler/fabric.git'
+    dest: "{{ ansible_user_dir }}/github/fabric"
+    clone: yes
+    update: yes
+
+- name: "Fabric | Install pipx on Debian-based systems"
+  ansible.builtin.apt:
+    name: pipx
+    state: present
+  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+
+- name: "Fabric | Install pipx on Archlinux"
+  ansible.builtin.pacman:
+    name: pipx
+    state: present
+  when: ansible_facts['distribution'] == 'Archlinux'
+
+- name: "Fabric | Install Fabric using pipx"
+  ansible.builtin.command:
+    cmd: "pipx install ."
+  args:
+    chdir: "{{ ansible_user_dir }}/github/fabric"
+
+- name: "Fabric | Decrypt values for.env file to the configuration directory"
+  copy:
+    dest: "{{ ansible_user_dir }}/.config/.env"
+    content: "{{ fabric_config }}"
+    owner: petert
+    group: petert
+    mode: "0644"
+  no_log: true
